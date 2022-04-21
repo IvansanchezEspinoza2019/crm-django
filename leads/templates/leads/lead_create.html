@@ -18,15 +18,13 @@
     </style>
 </head>
 <body>
-    <h1>All about leads</h1>
-    {% for lead in leads %}
-    <div class="lead">
-
-        <a href="/leads/{{lead.pk}}">{{lead.first_name}}
-            {{lead.last_name}}
-            {{lead.age}}</a>
-        
-    </div>
-    {% endfor %}
+    <a href="/leads">Go back to Leads</a>
+    <h1>Create a new Lead</h1>
+    <form method="post" action="/leads/create">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="send">
+    </form>
+    
 </body>
 </html>
