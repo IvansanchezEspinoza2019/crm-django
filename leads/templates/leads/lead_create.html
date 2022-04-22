@@ -18,9 +18,9 @@
     </style>
 </head>
 <body>
-    <a href="/leads">Go back to Leads</a>
+    <a href="{% url 'leads:lead-list' %}">Go back to Leads</a>
     <h1>Create a new Lead</h1>
-    <form method="post" action="/leads/create">
+    <form method="post" action="/leads/create/">
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="send">
