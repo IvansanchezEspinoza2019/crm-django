@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView , DetailView, CreateView, UpdateView, DeleteView, FormView      
 from .models import Category, Lead, Agent
-from .forms import LeadForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm
+from .forms import LeadForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm, LeadCategoryUpdateForm
 from agents.mixins import OrganizerAndLoginRequiredMixin
 
 
@@ -201,6 +201,42 @@ class CategoryListView(LoginRequiredMixin, ListView):
          queryset = Category.objects.filter(organization=user.userprofilemodel)
       else:
          queryset = Category.objects.filter(organization=user.agent.organization)
+      return queryset
+
+class CategoryDetailView(LoginRequiredMixin,DeleteView):
+   template_name = "leads/category_detail.html"
+   context_object_name = "category"
+
+   def get_queryset(self):
+      user = self.request.user
+      if user.is_organizer:
+         queryset = Category.objects.filter(organization=user.userprofilemodel)
+      else:
+         queryset = Category.objects.filter(organization=user.agent.organization)
+      return queryset
+
+   """def get_context_data(self, **kwargs):
+      context = super(CategoryDetailView, self).get_context_data(**kwargs)
+      qs=self.get_object().leads.all()
+      context.update({
+         "leads": qs
+      })
+      return context"""
+
+class LeadCategoryUpdateView(LoginRequiredMixin, UpdateView):
+   template_name = "leads/lead_category_update.html"
+   form_class = LeadCategoryUpdateForm
+
+   def get_success_url(self):
+       return reverse("leads:lead-detail", kwargs={"pk":self.get_object().id})
+
+   def get_queryset(self):
+      user = self.request.user
+      if user.is_organizer:
+         queryset = Lead.objects.filter(organization=user.userprofilemodel)
+      else:
+         queryset = Lead.objects.filter(organization=user.agent.organization)
+         queryset = queryset.filter(agent__user=user)
       return queryset
 
 # def lead_updtae(request, pk):
