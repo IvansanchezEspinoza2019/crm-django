@@ -29,11 +29,7 @@
           <div class="flex-grow">
             <h2 class="text-gray-900 text-lg title-font font-medium mb-3">{{lead.first_name}}  {{lead.last_name}}</h2>
             <p class="leading-relaxed text-base">
-                is simply dummy text of the printing and 
-                typesetting industry. Lorem Ipsum has been
-                 the industry's standard dummy text ever since
-                  the 1500s, when an unknown printer took a galley 
-                  of type and scrambled it to make a type specimen book.
+              {{ lead.description }}
                 </p>
             <a href=" {% url 'leads:lead-detail' lead.pk %}" class="mt-3 text-indigo-500 inline-flex items-center">
                 View Details
@@ -62,11 +58,7 @@
             <div class="flex-grow">
               <h2 class="text-gray-900 text-lg title-font font-medium mb-3">{{lead.first_name}}  {{lead.last_name}}</h2>
               <p class="leading-relaxed text-base">
-                  is simply dummy text of the printing and 
-                  typesetting industry. Lorem Ipsum has been
-                  the industry's standard dummy text ever since
-                    the 1500s, when an unknown printer took a galley 
-                    of type and scrambled it to make a type specimen book.
+                 {{ lead.description }}
                   </p>
               <a href=" {% url 'leads:assign-agent' lead.pk %}" class="mt-3 text-indigo-500 inline-flex items-center">
                   Assign an Agent
